@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { MockProvider } from 'ng-mocks';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
-import { MockInstance, MockProvider, ngMocks } from 'ng-mocks';
 import { HttpService } from './services/http/http.service';
-import { of, tap } from 'rxjs';
 
 describe('AppComponent', () => {
   let component: AppComponent;

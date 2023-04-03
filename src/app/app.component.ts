@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Book, HttpService } from './services/http/http.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',

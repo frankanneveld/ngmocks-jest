@@ -20,4 +20,8 @@ export class HttpService {
       map((resp: any) => resp?.books)
     );
   }
+
+  public setNewData(data: any): void {
+    //
+  }
 }
