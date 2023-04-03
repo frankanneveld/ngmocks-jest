@@ -39,6 +39,12 @@ describe('AppComponent', () => {
       },
     ];
 
+    jest.spyOn(service, 'getBooks').mockReturnValue(of(books));
+    fixture.detectChanges();
+    expect(component.books).not.toBeNull();
+  }));
+
+  it('should NOT get books on ngOnInit', fakeAsync(() => {
     jest.spyOn(service, 'getBooks').mockReturnValue(null);
     fixture.detectChanges();
     expect(component.books).toBeNull();
