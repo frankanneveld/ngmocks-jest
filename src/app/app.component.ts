@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   public httpService = inject(HttpService);
 
-  public books: Observable<Book[]> = new Observable<Book[]>();
+  public books: Observable<Book[]> | null  = new Observable<Book[]>();
 
   ngOnInit(): void {
     this.books = this.httpService.getBooks();

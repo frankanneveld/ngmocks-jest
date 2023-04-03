@@ -15,9 +15,9 @@ export class HttpService {
   private http = inject(HttpClient);
   private booksUrl: string = './assets/books.json';
 
-  public getBooks(): Observable<Book[]> {
+  public getBooks(): Observable<Book[]> | null {
     return this.http.get<Book[]>(this.booksUrl).pipe(
-      map((resp: any) => resp.books)
+      map((resp: any) => resp?.books)
     );
   }
 }

@@ -1,35 +1,46 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { MockInstance, MockProvider, ngMocks } from 'ng-mocks';
+import { HttpService } from './services/http/http.service';
+import { of, tap } from 'rxjs';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let service: HttpService;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
+      providers: [MockProvider(HttpService)],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    service = TestBed.inject(HttpService);
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'ngmocks-jest'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('ngmocks-jest');
-  });
+  it('should get books on ngOnInit', fakeAsync(() => {
+    const books = [
+      {
+        book_id: 1,
+        book_title: 'The Unknown Jhon',
+        author_name: 'Jhon Doe',
+      },
+      {
+        book_id: 2,
+        book_title: 'The Unknown Jane',
+        author_name: 'Jane Doe',
+      },
+    ];
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+    jest.spyOn(service, 'getBooks').mockReturnValue(null);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ngmocks-jest app is running!');
-  });
+    expect(component.books).toBeNull();
+  }));
 });
