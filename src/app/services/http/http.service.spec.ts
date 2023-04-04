@@ -1,7 +1,7 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed, fakeAsync } from '@angular/core/testing';
-import { delay, from, map, of, tap } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { HttpService } from './http.service';
 
 describe('HttpService', () => {
@@ -48,9 +48,8 @@ describe('HttpService', () => {
 
   it('should get books', () => {
     jest.spyOn(httpClient, 'get').mockReturnValue(of(books));
-    service.getBooks().subscribe();
+    service.getBooks().subscribe((r) => console.log(r));
     expect(httpClient.get).toHaveBeenCalled();
-    expect(httpClient.get).toHaveBeenCalledTimes(1);
     expect(httpClient.get).toHaveBeenCalledTimes(1);
   });
 

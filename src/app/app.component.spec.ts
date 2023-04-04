@@ -38,8 +38,10 @@ describe('AppComponent', () => {
       },
     ];
 
-    jest.spyOn(service, 'getBooks');
+    jest.spyOn(service, 'getBooks').mockReturnValue(of(books));
     fixture.detectChanges();
     expect(service.getBooks).toHaveBeenCalled();
   });
+
+
 });
