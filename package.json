@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "jest --no-cache --codeCoverage",
+    "test": "jest --no-cache",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand"
   },
@@ -36,7 +36,7 @@
     "typescript": "~4.9.4"
   },
   "jest": {
-    "collectCoverage": false,
+    "collectCoverage": true,
     "collectCoverageFrom": [
       "./src/**"
     ],
@@ -44,7 +44,8 @@
       "node_modules",
       ".module.ts",
       ".html",
-      "<rootDir>/src/main.ts"
+      "<rootDir>/src/main.ts",
+      "<rootDir>/src/assets"
     ],
     "coverageThreshold": {
       "global": {

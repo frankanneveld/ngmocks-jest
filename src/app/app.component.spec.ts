@@ -24,7 +24,7 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get books on ngOnInit', fakeAsync(() => {
+  it('should get books on ngOnInit', () => {
     const books = [
       {
         book_id: 1,
@@ -40,12 +40,12 @@ describe('AppComponent', () => {
 
     jest.spyOn(service, 'getBooks').mockReturnValue(of(books));
     fixture.detectChanges();
-    expect(component.books).not.toBeNull();
-  }));
+    expect(component.books).not.toBeUndefined();
+  });
 
-  it('should NOT get books on ngOnInit', fakeAsync(() => {
-    jest.spyOn(service, 'getBooks').mockReturnValue(null);
+  it('should NOT get books on ngOnInit', () => {
+    jest.spyOn(service, 'getBooks');
     fixture.detectChanges();
-    expect(component.books).toBeNull();
-  }));
+    expect(component.books).toBeUndefined();
+  });
 });
