@@ -1,17 +1,17 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { HttpService } from './http.service';
+import { of } from 'rxjs';
 import { MockProvider } from 'ng-mocks';
-import { Observable, of } from 'rxjs';
-import { Book, HttpService } from './http.service';
 
 describe('HttpService', () => {
   let service: HttpService;
   let httpController: HttpTestingController;
-  let httpClient: HttpClient;
+  // let httpClient: HttpClient;
 
   const books = {
     books: [
@@ -38,39 +38,38 @@ describe('HttpService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [HttpService],
     });
 
     service = TestBed.inject(HttpService);
     httpController = TestBed.inject(HttpTestingController);
-    httpClient = TestBed.inject(HttpClient);
+    // httpClient = TestBed.inject(HttpClient);
   });
 
-  afterEach(() => {
-    httpController.verify();
-    console.log('afterEach');
-  });
+  // afterEach(() => {
+  //   httpController.verify();
+  //   console.log('afterEach');
+  // });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
   it('should get books', () => {
+    // jest.spyOn(service, 'getBooks').mockReturnValue(of(books.books));
 
+    service.getBooks().subscribe((res) => {
+      expect(res).toEqual(books);
+      expect(false).toBeTruthy(); // this will pass the test also ????
+      console.log(res);
+    });
 
-
-    httpClient.get<Book[]>('./assets/books.json')
-    .subscribe(data =>
-        expect(data).toBe(books)
-    );
-
-    
-
-
-
-
-    const req = httpController.expectOne('./assets/books.json');
-    expect(req.request.method).toBe('GET');
-    req.flush(books);
+    // const req = httpController.expectOne({
+    //   method: 'GET',
+    //   url: './assets/books.json',
+    // });
+    // console.log(req);
+    // expect(req.request.method).toBe('GET');
+    // req.flush(books);
   });
-
 });

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, delay, map, mapTo, tap } from 'rxjs';
+import { Observable, delay, map } from 'rxjs';
 
 export type Book = {
   book_id: number;
