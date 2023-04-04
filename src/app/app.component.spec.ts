@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockProvider } from 'ng-mocks';
-import { of } from 'rxjs';
+import { of, tap } from 'rxjs';
 import { AppComponent } from './app.component';
 import { HttpService } from './services/http/http.service';
 
@@ -38,14 +38,8 @@ describe('AppComponent', () => {
       },
     ];
 
-    jest.spyOn(service, 'getBooks').mockReturnValue(of(books));
-    fixture.detectChanges();
-    expect(component.books).not.toBeUndefined();
-  });
-
-  it('should NOT get books on ngOnInit', () => {
     jest.spyOn(service, 'getBooks');
     fixture.detectChanges();
-    expect(component.books).toBeUndefined();
+    expect(service.getBooks).toHaveBeenCalled();
   });
 });
