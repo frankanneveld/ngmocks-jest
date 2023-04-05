@@ -1,18 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockProvider } from 'ng-mocks';
-import { of, tap } from 'rxjs';
-import { AppComponent } from './app.component';
-import { HttpService } from './services/http/http.service';
+import { ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
+import { MockProvider } from "ng-mocks";
+import { of } from "rxjs";
+import { AppComponent } from "./app.component";
+import { HttpService, Book } from "./services/http/http.service";
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let service: HttpService;
   let fixture: ComponentFixture<AppComponent>;
+  const testBook: Book[] = [{
+    book: 'test'
+  } as unknown as Book];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      providers: [MockProvider(HttpService)],
+      providers: [
+        MockProvider(HttpService, {
+          getBooks: () => of(testBook)
+        })
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -24,24 +31,14 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get books on ngOnInit', () => {
-    const books = [
-      {
-        book_id: 1,
-        book_title: 'The Unknown Jhon',
-        author_name: 'Jhon Doe',
-      },
-      {
-        book_id: 2,
-        book_title: 'The Unknown Jane',
-        author_name: 'Jane Doe',
-      },
-    ];
+  it('should get books on ngOnInit',  fakeAsync( ()=> {
+    jest.spyOn(service, 'getBooks');
+    component.ngOnInit();
 
-    jest.spyOn(service, 'getBooks').mockReturnValue(of(books));
-    fixture.detectChanges();
     expect(service.getBooks).toHaveBeenCalled();
-  });
-
-
+    component.books?.subscribe( (books: Book[]) => {
+        expect(books).toBe(testBook);
+    })
+    tick();
+  }));
 });

@@ -1,7 +1,8 @@
-import { from, map } from "rxjs";
+import { discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
+import { concatMap, delay, from, map, of, tap } from 'rxjs';
 
 describe('Arrays to test with RxJs', () => {
-it('should do something', () => {
+  it('should do something', () => {
     const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const obs$ = from(arr).pipe(map((r) => r + 1));
     const expected = 55;
@@ -14,14 +15,31 @@ it('should do something', () => {
     expect(count).not.toBeNull();
   });
 
-  it('should do something with array subscribtion', () => {
-    const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const obs$ = from(arr);
-
+  it('should do something with array subscribtion', fakeAsync(() => {
+    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    const obs$ = from(arr).pipe(
+      concatMap((item) => of(item).pipe(delay(100))),
+      tap(console.log)
+    );
+    let result = null;
     obs$.subscribe((res) => {
       console.log(res, res === 1);
-      expect(res).not.toBe(56)
+      result = res;
     });
+    tick(100); // Elke tick zorgt voor een timeout op de volgende itteratie.
+    expect(result).toBe(1);
+    tick(100);
+    expect(result).toBe(2);
+    tick(100);
+    expect(result).toBe(3);
+    tick(700);
+    expect(result).toBe(10);
 
-  });
+    // Op dit punt blijft er nog 1 periodic timer in de queue.
+    // Omdat de totale tijd 1000 ms zou dit uitkomen op positie 10 in de array.
+    // Waarde 11 wordt meegenomen in de queue maar wordt vervolgens niet afgehandelt in de tick().
+    // Om de periodieke timers te stoppen : discardPeriodicTasks();
+
+    discardPeriodicTasks();
+  }));
 });
