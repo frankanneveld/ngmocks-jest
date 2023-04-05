@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, catchError, delay, map, of, tap, throwError } from 'rxjs';
+import { Observable, catchError, delay, map, of } from 'rxjs';
 
 export type Book = {
   book_id: number;
@@ -17,7 +17,6 @@ export class HttpService {
 
   public getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.booksUrl).pipe(
-
       delay(1000),
       map((resp: any) => resp?.books),
       catchError((error) => {
