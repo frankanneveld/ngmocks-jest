@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable()
 export class HttpBookInterceptor implements HttpInterceptor {
@@ -13,6 +13,10 @@ export class HttpBookInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request);
+    return next.handle(request).pipe(
+      tap(console.log)
+    );
   }
+
+  
 }
