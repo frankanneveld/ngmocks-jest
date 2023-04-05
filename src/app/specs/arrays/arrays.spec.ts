@@ -43,7 +43,7 @@ describe('Arrays to test with RxJs', () => {
     // Omdat de totale tijd 1000 ms zou dit uitkomen op positie 10 in de array.
     // Waarde 11 wordt meegenomen in de queue maar wordt vervolgens niet afgehandelt in de tick().
     // Om de periodieke timers te stoppen : discardPeriodicTasks();
-
-    discardPeriodicTasks();
+    tick(100);
+    // discardPeriodicTasks();
   }));
 });

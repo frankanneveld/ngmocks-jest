@@ -1,12 +1,21 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpErrorResponse,
+} from '@angular/common/http';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { catchError, of, throwError } from 'rxjs';
 import { HttpService } from './http.service';
+import { MockProvider } from 'ng-mocks';
 
 describe('HttpService', () => {
   let service: HttpService;
   let httpClient: HttpClient;
+  let controller: HttpTestingController;
 
   const books = {
     books: [
@@ -31,6 +40,14 @@ describe('HttpService', () => {
   };
 
   beforeEach(() => {
+    // --- how to mock rxjs ---
+    // jest.mock('rxjs', () => ({
+    //   ...jest.requireActual('rxjs'),
+    //   fromEvent: jest.fn(() => of(null)),
+    //   from: jest.fn(() => of(null)),
+    //   throwError: jest.fn(() => of(null)),
+    // }));
+
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [HttpService],
@@ -38,21 +55,38 @@ describe('HttpService', () => {
 
     service = TestBed.inject(HttpService);
     httpClient = TestBed.inject(HttpClient);
+    controller = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    controller.verify();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get books', () => {
-    jest.spyOn(httpClient, 'get').mockReturnValue(of(books));
-    service.getBooks();
-    expect(httpClient.get).toHaveBeenCalledTimes(1);
-  });
+  it('should get books', fakeAsync(() => {
+    service.getBooks().subscribe((value) => expect(value).toBe(books.books));
 
-  it('should handle http error', () => {
+    const req = controller.expectOne('./assets/books.json');
+    req.flush(books);
+    tick(1000);
+  }));
 
-  });
+  it('should catch error 404 not found', fakeAsync(() => {
+    service.getBooks().subscribe({
+      next: (value) => {
+        expect(value).toBe('error!!!');
+        console.log(value);
+      },
+      error: (error) =>
+        expect(error.statusText).toEqual('This should never occur.'),
+      complete: () => console.log('Completed'),
+    });
 
-
+    const req = controller.expectOne('./assets/books.json');
+    req.flush(null, { status: 500, statusText: 'Error' });
+    tick();
+  }));
 });

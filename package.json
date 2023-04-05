@@ -36,7 +36,7 @@
     "typescript": "~4.9.4"
   },
   "jest": {
-    "collectCoverage": true,
+    "collectCoverage": false,
     "collectCoverageFrom": [
       "./src/**"
     ],
