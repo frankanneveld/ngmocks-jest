@@ -1,7 +1,7 @@
 import { discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
 import { concatMap, delay, from, map, of, tap } from 'rxjs';
 
-describe('Arrays to test with RxJs', () => {
+describe('testing rxjs', () => {
   it('should do something', () => {
     const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const obs$ = from(arr).pipe(map((r) => r + 1));
@@ -12,10 +12,10 @@ describe('Arrays to test with RxJs', () => {
 
     expect(count).toEqual(expected);
     expect(count).toBe(expected);
-    expect(count).not.toBeNull();
+    expect(count).not.toBe(0);
   });
 
-  it('should do something with array subscribtion', fakeAsync(() => {
+  it('testing fakeAsync', fakeAsync(() => {
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     const obs$ = from(arr).pipe(
       concatMap((item) => of(item).pipe(delay(100))),
@@ -24,7 +24,7 @@ describe('Arrays to test with RxJs', () => {
 
     let result = null;
     obs$.subscribe((res) => {
-      console.log(res, res === 1);
+      // console.log(res, res === 1);
       result = res;
     });
 

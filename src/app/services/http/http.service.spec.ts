@@ -40,14 +40,6 @@ describe('HttpService', () => {
   };
 
   beforeEach(() => {
-    // --- how to mock rxjs ---
-    // jest.mock('rxjs', () => ({
-    //   ...jest.requireActual('rxjs'),
-    //   fromEvent: jest.fn(() => of(null)),
-    //   from: jest.fn(() => of(null)),
-    //   throwError: jest.fn(() => of(null)),
-    // }));
-
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [HttpService],
@@ -71,18 +63,15 @@ describe('HttpService', () => {
 
     const req = controller.expectOne('./assets/books.json');
     req.flush(books);
-    tick(1000);
+    tick(1000); // there is a delay(1000)
   }));
 
-  it('should catch error 404 not found', fakeAsync(() => {
+  it('should catch error 500 Error', fakeAsync(() => {
     service.getBooks().subscribe({
       next: (value) => {
         expect(value).toBe('error!!!');
-        console.log(value);
       },
-      error: (error) =>
-        expect(error.statusText).toEqual('This should never occur.'),
-      complete: () => console.log('Completed'),
+      error: (error) => expect(error).toEqual('This should never occur.'),
     });
 
     const req = controller.expectOne('./assets/books.json');

@@ -10,13 +10,9 @@ import { Book, HttpService } from './services/http/http.service';
 export class AppComponent implements OnInit {
   public httpService = inject(HttpService);
 
-  public books: Observable<Book[]> = new Observable<Book[]>();
+  public books!: Observable<Book[]>;
 
   ngOnInit(): void {
     this.books = this.httpService.getBooks();
-  }
-
-  public getBooksWithHttpError(): void {
-    this.httpService.getBooksWithHttpError().subscribe( result => console.log(result));
   }
 }
