@@ -15,4 +15,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.books = this.httpService.getBooks();
   }
+
+  public getBooksWithHttpError(): void {
+    this.httpService.getBooksWithHttpError().subscribe( result => console.log(result));
+  }
 }

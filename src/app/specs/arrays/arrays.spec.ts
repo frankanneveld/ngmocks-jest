@@ -21,12 +21,16 @@ describe('Arrays to test with RxJs', () => {
       concatMap((item) => of(item).pipe(delay(100))),
       tap(console.log)
     );
+
     let result = null;
     obs$.subscribe((res) => {
       console.log(res, res === 1);
       result = res;
     });
-    tick(100); // Elke tick zorgt voor een timeout op de volgende itteratie.
+
+    // Elke tick zorgt voor een timeout op de volgende itteratie.
+    // Met een tussen dalay van 100 ms. op elke itteratie.
+    tick(100);
     expect(result).toBe(1);
     tick(100);
     expect(result).toBe(2);

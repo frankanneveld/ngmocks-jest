@@ -6,7 +6,6 @@ import { HttpService } from './http.service';
 
 describe('HttpService', () => {
   let service: HttpService;
-  // let httpController: HttpTestingController;
   let httpClient: HttpClient;
 
   const books = {
@@ -38,7 +37,6 @@ describe('HttpService', () => {
     });
 
     service = TestBed.inject(HttpService);
-    // httpController = TestBed.inject(HttpTestingController);
     httpClient = TestBed.inject(HttpClient);
   });
 
@@ -48,9 +46,12 @@ describe('HttpService', () => {
 
   it('should get books', () => {
     jest.spyOn(httpClient, 'get').mockReturnValue(of(books));
-    service.getBooks().subscribe((r) => console.log(r));
-    expect(httpClient.get).toHaveBeenCalled();
+    service.getBooks();
     expect(httpClient.get).toHaveBeenCalledTimes(1);
+  });
+
+  it('should handle http error', () => {
+
   });
 
 

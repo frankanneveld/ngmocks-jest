@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, delay, map } from 'rxjs';
+import { Observable, catchError, delay, map, throwError } from 'rxjs';
 
 export type Book = {
   book_id: number;
@@ -22,7 +22,12 @@ export class HttpService {
     );
   }
 
-  pietje(): void {
-    //
+  public getBooksWithHttpError(): Observable<Book[]> {
+    return this.http.get<Book[]>('/not-found').pipe(
+      catchError((error) => {
+        return throwError(() => new Error('Oops something happened, ', error));
+      })
+    );
   }
+
 }
