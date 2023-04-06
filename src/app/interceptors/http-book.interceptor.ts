@@ -19,8 +19,7 @@ export class HttpBookInterceptor implements HttpInterceptor {
 
 private handleError(error: HttpErrorResponse, req: HttpRequest<unknown>): Observable<never> {
     const errorMessage = `HTTP_ERROR: Call ${req.method} to ${req.url} has failed.`;
-    console.error('Error: ', errorMessage);
-    return throwError(() => 'Oops we have a HTTP error!');
+    return throwError(() => 'Oops we have an HTTP error!');
 }
 }
 

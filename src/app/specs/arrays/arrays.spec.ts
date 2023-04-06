@@ -1,8 +1,8 @@
 import { discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
 import { concatMap, delay, from, map, of, tap } from 'rxjs';
 
-describe('testing rxjs', () => {
-  it('should do something', () => {
+describe('testing arrays', () => {
+  it('testing rxjs', () => {
     const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const obs$ = from(arr).pipe(map((r) => r + 1));
     const expected = 55;
