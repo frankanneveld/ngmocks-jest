@@ -19,7 +19,7 @@ export class HttpService {
     return this.http.get<Book[]>(this.booksUrl).pipe(
       delay(1000),
       map((resp: any) => resp?.books),
-      catchError((error) => {
+      catchError((error) => { // error will be set by the interceptor with a custom message.
         return of('error!!!' as unknown as Book[]);
       })
     );
