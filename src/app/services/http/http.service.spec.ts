@@ -1,16 +1,12 @@
 import {
-  HttpClient,
-  HttpClientModule,
-  HttpErrorResponse,
+  HttpClient
 } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { catchError, of, throwError } from 'rxjs';
 import { HttpService } from './http.service';
-import { MockProvider } from 'ng-mocks';
 
 describe('HttpService', () => {
   let service: HttpService;
