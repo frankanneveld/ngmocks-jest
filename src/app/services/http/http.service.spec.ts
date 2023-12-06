@@ -54,13 +54,23 @@ describe('HttpService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get books', fakeAsync(() => {
-    service.getBooks().subscribe((value) => expect(value).toBe(books.books));
+  describe('getBooks()', () => {
+    it('should get books', fakeAsync(() => {
+      service.getBooks().subscribe((value) => expect(value).toBe(books.books));
 
-    const req = controller.expectOne('./assets/books.json');
-    req.flush(books);
-    tick(1000); // there is a delay(1000)
-  }));
+      const req = controller.expectOne('./assets/books.json');
+      req.flush(books);
+      tick(1000); // there is a delay(1000)
+    }));
+
+    it('should not get books', fakeAsync(() => {
+      service.getBooks().subscribe((value) => expect(value).not.toBe(books.books));
+
+      const req = controller.expectOne('./assets/books.json');
+      req.flush(null);
+      tick(1000); // there is a delay(1000)
+    }));
+});
 
   it('should catch error 500 Error', fakeAsync(() => {
     service.getBooks().subscribe({
