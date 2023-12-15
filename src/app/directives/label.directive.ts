@@ -10,6 +10,6 @@ export class LabelDirective implements OnInit {
   @Input({ required: true }) label!: string;
 
   ngOnInit(): void {
-    (this.elm.nativeElement as HTMLElement).insertAdjacentHTML('beforebegin', '<label>'+this.label+'<label/>');
+    (this.elm.nativeElement as HTMLElement).insertAdjacentHTML('beforebegin', '<label>' + this.label); // note: </label> will be automatically added to end of string result is: <label>label-name</label>
   }
 }

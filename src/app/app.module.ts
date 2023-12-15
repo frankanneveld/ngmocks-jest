@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpBookInterceptorProvider } from './interceptors/http-book.interceptor';
+import { LabelComponent } from './directives/label/label.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { HttpBookInterceptorProvider } from './interceptors/http-book.intercepto
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    LabelComponent
   ],
   providers: [HttpBookInterceptorProvider],
   bootstrap: [AppComponent]
