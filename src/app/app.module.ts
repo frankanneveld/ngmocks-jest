@@ -5,8 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { LabelComponent } from './directives/component/basic.component';
 import { HttpBookInterceptorProvider } from './interceptors/http-book.interceptor';
-import { LabelComponent } from './directives/label/label.component';
 
 @NgModule({
   declarations: [

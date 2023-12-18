@@ -17,6 +17,7 @@ describe('LabelDirective', () => {
   let component: TestComponent;
 
   beforeEach(() => {
+    // ElementRef deze is nodig ook al is de directive en component standalone, we moeten de test toch nog eerst providen.
     TestBed.configureTestingModule({
       providers: [{ provide: ElementRef, useValue: {} }],
     });
@@ -34,7 +35,7 @@ describe('LabelDirective', () => {
 
   describe('OnInit()', () => {
     it('should add <label></label> before input element', () => {      
-      fixture.detectChanges();
+      fixture.detectChanges(); // nodig voor update in de DOM
       const labelElement: HTMLElement = fixture.nativeElement.querySelector('label');
       expect(labelElement.innerHTML).toBe('Label-name');
     });

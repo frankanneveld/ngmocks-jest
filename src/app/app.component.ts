@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book, HttpService } from './services/http/http.service';
-import { LabelComponent } from './directives/label/label.component';
+import { LabelComponent } from './directives/component/basic.component';
 
 @Component({
   selector: 'app-root',
