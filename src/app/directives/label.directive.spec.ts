@@ -3,6 +3,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { LabelDirective } from './label.directive';
 
+class ElementRefMock extends ElementRef {
+  constructor() {
+    super(undefined)
+  }
+}
+
 // Mock component for testing Label Directive
 @Component({
   standalone: true,
@@ -17,9 +23,9 @@ describe('LabelDirective', () => {
   let component: TestComponent;
 
   beforeEach(() => {
-    // ElementRef deze is nodig ook al is de directive en component standalone, we moeten de test toch nog eerst providen.
+    // ElementRef deze is nodig ook al is de directive en component standalone, we moeten de test eerst nog providen.
     TestBed.configureTestingModule({
-      providers: [{ provide: ElementRef, useValue: {} }],
+      providers: [{ provide: ElementRef, useClass: ElementRefMock }], // of providers: [{ provide: ElementRef, useValue: {} }] werkt ook
     });
   });
 
