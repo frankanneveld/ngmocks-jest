@@ -9,6 +9,7 @@ describe('LabelComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LabelComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should create', () => {

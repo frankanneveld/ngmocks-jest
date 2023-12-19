@@ -9,6 +9,4 @@ import { HeadingDirective } from '../heading.directive';
   templateUrl: './basic.component.html',
   styleUrls: ['./basic.component.scss']
 })
-export class LabelComponent {
-
-}
+export class LabelComponent {}
