@@ -14,7 +14,7 @@ import {
 export class HeadingDirective implements OnInit {
   private vc = inject(ViewContainerRef);
   private template = inject(TemplateRef<unknown>);
-  private renderer = inject(Renderer2)
+  private renderer = inject(Renderer2);
 
   ngOnInit(): void {
     const elm = this.renderer.createElement('h1') as HTMLElement;
